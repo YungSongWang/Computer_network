@@ -38,6 +38,8 @@ try:
   # Bind the the server socket to a host and port
   # ~~~~ INSERT CODE ~~~~
   # ~~~~ END CODE INSERT ~~~~
+  # //绑定端口
+  serverSocker.bind((proxyHost, proxyPort))
   print ('Port is bound')
 except:
   print('Port is already in use')
@@ -47,6 +49,9 @@ try:
   # Listen on the server socket
   # ~~~~ INSERT CODE ~~~~
   # ~~~~ END CODE INSERT ~~~~
+
+  serverSocker.listen(5)
+  # //监听端口
   print ('Listening to socket')
 except:
   print ('Failed to listen')
