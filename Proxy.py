@@ -133,7 +133,7 @@ while True:
     clientSocket.sendall(''.join(cacheData).encode())
     # for data in cacheData:
     #   clientSocket.send(data.encode())
-    
+
 
     # ~~~~ END CODE INSERT ~~~~
     cacheFile.close()
@@ -145,6 +145,7 @@ while True:
     # Create a socket to connect to origin server
     # and store in originServerSocket
     # ~~~~ INSERT CODE ~~~~
+    originServerSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # ~~~~ END CODE INSERT ~~~~
 
     print ('Connecting to:\t\t' + hostname + '\n')
@@ -153,16 +154,28 @@ while True:
       address = socket.gethostbyname(hostname)
       # Connect to the origin server
       # ~~~~ INSERT CODE ~~~~
+      originServerSocket.connect((address, 80)) #http-80, https-443
+      # 目标网站的端口是80
+      # //连接到服务器
+
       # ~~~~ END CODE INSERT ~~~~
       print ('Connected to origin Server')
 
       originServerRequest = ''
       originServerRequestHeader = ''
       # Create origin server request line and headers to send
+
+      # Construct the request line and store in originServerRequest
+
+
       # and store in originServerRequestHeader and originServerRequest
       # originServerRequest is the first line in the request and
       # originServerRequestHeader is the second line in the request
       # ~~~~ INSERT CODE ~~~~
+
+      originServerRequest = method + ' ' + resource + ' ' + version
+      originServerRequestHeader = 'Host: ' + hostname
+      # //请求头
       # ~~~~ END CODE INSERT ~~~~
 
       # Construct the request to send to the origin server
