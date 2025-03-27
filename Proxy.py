@@ -131,7 +131,10 @@ while True:
     # Send back response to client 
     # ~~~~ INSERT CODE ~~~~
     clientSocket.sendall(''.join(cacheData).encode())
+    # for data in cacheData:
+    #   clientSocket.send(data.encode())
     
+
     # ~~~~ END CODE INSERT ~~~~
     cacheFile.close()
     print ('Sent to the client:')
