@@ -7,6 +7,8 @@ import re
 
 # 1MB buffer size
 BUFFER_SIZE = 1000000
+# //缓冲区大小
+
 #任务目标是做个web代理服务器
 
 
@@ -75,6 +77,7 @@ while True:
   # Get HTTP request from client
   # and store it in the variable: message_bytes
   # ~~~~ INSERT CODE ~~~~
+  message_bytes = clientSocket.recv(BUFFER_SIZE)
   # ~~~~ END CODE INSERT ~~~~
   message = message_bytes.decode('utf-8')
   print ('Received request:')
@@ -127,6 +130,8 @@ while True:
     # ProxyServer finds a cache hit
     # Send back response to client 
     # ~~~~ INSERT CODE ~~~~
+    clientSocket.sendall(''.join(cacheData).encode())
+    
     # ~~~~ END CODE INSERT ~~~~
     cacheFile.close()
     print ('Sent to the client:')
