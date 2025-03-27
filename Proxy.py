@@ -167,14 +167,13 @@ while True:
 
       # Construct the request line and store in originServerRequest
 
-
       # and store in originServerRequestHeader and originServerRequest
       # originServerRequest is the first line in the request and
       # originServerRequestHeader is the second line in the request
       # ~~~~ INSERT CODE ~~~~
 
-      originServerRequest = method + ' ' + resource + ' ' + version
-      originServerRequestHeader = 'Host: ' + hostname
+      originServerRequest = f"GET {resource} HTTP/1.1"
+      originServerRequestHeader = f"Host: {hostname}"
       # //请求头
       # ~~~~ END CODE INSERT ~~~~
 
@@ -196,6 +195,7 @@ while True:
 
       # Get the response from the origin server
       # ~~~~ INSERT CODE ~~~~
+      originServerResponse = originServerSocket.recv(BUFFER_SIZE)
       # ~~~~ END CODE INSERT ~~~~
 
       # Send the response to the client
