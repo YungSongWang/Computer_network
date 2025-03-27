@@ -200,6 +200,8 @@ while True:
 
       # Send the response to the client
       # ~~~~ INSERT CODE ~~~~
+      clientSocket.sendall(originServerResponse)
+      # 转发给原始客户端
       # ~~~~ END CODE INSERT ~~~~
 
       # Create a new file in the cache for the requested file.
@@ -211,6 +213,9 @@ while True:
 
       # Save origin server response in the cache file
       # ~~~~ INSERT CODE ~~~~
+      cacheFile.write(originServerResponse)
+      # save origin server response in the cache
+      
       # ~~~~ END CODE INSERT ~~~~
       cacheFile.close()
       print ('cache file closed')
