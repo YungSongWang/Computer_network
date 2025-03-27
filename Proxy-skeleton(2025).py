@@ -20,6 +20,7 @@ proxyPort = int(args.port)
 try:
   # Create a server socket
   # ~~~~ INSERT CODE ~~~~
+  # //我要创建一个socket，这个socket是用来接收client的请求的
   # ~~~~ END CODE INSERT ~~~~
   print ('Created socket')
 except:
