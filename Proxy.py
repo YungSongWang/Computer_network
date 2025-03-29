@@ -127,6 +127,28 @@ while True:
     # Check wether the file is currently in the cache
     cacheFile = open(cacheLocation, "r")
     cacheData = cacheFile.readlines()
+    cache_str=''.join(cacheData)
+    
+
+    # Check for expiration dates
+
+    # Check if the cache file is expired
+    # ~~~~ INSERT CODE ~~~~
+    cache_control_mat=re.search(r'Cache-Control: max-age=(\d+)', cache_str,re.IGNORECASE)
+    mx_age=int(cache_control_mat.group(1)) if cache_control_mat else 0
+    # print(mx_age)
+    modified_time_mat=os.path.getmtime(cacheLocation)
+    # print(modified_time_mat)
+    current_age=time.time()-modified_time_mat
+    print(f"current_age={current_age}")
+    # print(current_age)
+    if current_age>mx_age:
+        print("cache expired")
+        raise Exception("Cache expired")
+    # ~~~~ END CODE INSERT ~~~~
+    # Check if the cache file is still valid
+
+
 
     print ('Cache hit! Loading from cache file: ' + cacheLocation)
     # ProxyServer finds a cache hit
