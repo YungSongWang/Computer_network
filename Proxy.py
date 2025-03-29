@@ -39,6 +39,8 @@ except:
 try:
   # Bind the the server socket to a host and port
   # ~~~~ INSERT CODE ~~~~
+  
+
   # ~~~~ END CODE INSERT ~~~~
   # //绑定端口
   serverSocker.bind((proxyHost, proxyPort))
@@ -174,6 +176,7 @@ while True:
 
       originServerRequest = f"GET {resource} HTTP/1.1"
       originServerRequestHeader = f"Host: {hostname}"
+
       # //请求头
       # ~~~~ END CODE INSERT ~~~~
 
@@ -215,7 +218,7 @@ while True:
       # ~~~~ INSERT CODE ~~~~
       cacheFile.write(originServerResponse)
       # save origin server response in the cache
-      
+
       # ~~~~ END CODE INSERT ~~~~
       cacheFile.close()
       print ('cache file closed')
