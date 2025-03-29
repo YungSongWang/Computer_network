@@ -162,7 +162,9 @@ while True:
     # ~~~~ END CODE INSERT ~~~~
     cacheFile.close()
     print ('Sent to the client:')
-    print ('> ' + cacheData)
+
+    # Print the cache data(updated)
+    print ('> ' + cache_str)    
   except:
     # cache miss.  Get resource from origin server
     originServerSocket = None
@@ -225,25 +227,45 @@ while True:
 
       # Send the response to the client
       # ~~~~ INSERT CODE ~~~~
-      clientSocket.sendall(originServerResponse)
+      clientSocket.sendall(originServerResponse)     
       # 转发给原始客户端
       # ~~~~ END CODE INSERT ~~~~
 
+      #Determines whether it is cached
+      response_str=originServerResponse.decode('ISO-8859-1')
+      status_lines=response_str.split('\r\n')[0]
+      status_code=status_lines.split()[1]
+
+      no_store=re.search(r'Cache-Control:\s*no-store',response_str,re.IGNORECASE)
+      no_cache=re.search(r'Cache-Control:\s*no-cache',response_str,re.IGNORECASE)
+      # print(status_code)
+      # print(no_cache)
+      # print(no_store)
+      # print(response_str)
+      # Check for cache control
+
+      go_cache=True
+      if no_store:
+        go_cache=False
+
+
       # Create a new file in the cache for the requested file.
-      cacheDir, file = os.path.split(cacheLocation)
-      print ('cached directory ' + cacheDir)
-      if not os.path.exists(cacheDir):
-        os.makedirs(cacheDir)
-      cacheFile = open(cacheLocation, 'wb')
+      if go_cache:
+        # Create a new file in the cache for the requested file.
+        cacheDir, file = os.path.split(cacheLocation)
+        print ('cached directory ' + cacheDir)
+        if not os.path.exists(cacheDir):
+          os.makedirs(cacheDir)
+        cacheFile = open(cacheLocation, 'wb')
 
-      # Save origin server response in the cache file
-      # ~~~~ INSERT CODE ~~~~
-      cacheFile.write(originServerResponse)
-      # save origin server response in the cache
+        # Save origin server response in the cache file
+        # ~~~~ INSERT CODE ~~~~
+        cacheFile.write(originServerResponse)
+        # save origin server response in the cache
 
-      # ~~~~ END CODE INSERT ~~~~
-      cacheFile.close()
-      print ('cache file closed')
+        # ~~~~ END CODE INSERT ~~~~
+        cacheFile.close()
+        print ('cache file closed')
 
       # finished communicating with origin server - shutdown socket writes
       print ('origin response received. Closing sockets')
