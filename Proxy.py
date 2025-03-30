@@ -7,9 +7,10 @@ import re
 
 # 1MB buffer size
 BUFFER_SIZE = 1000000
-# //缓冲区大小
+# //buffer size
 
-#任务目标是做个web代理服务器
+#Task is to implement a simple web proxy server
+
 
 
 # Get the IP address and Port number to use for this web proxy server
@@ -24,11 +25,12 @@ proxyPort = int(args.port)
 try:
   # Create a server socket
   # ~~~~ INSERT CODE ~~~~
-  # //我要创建一个socket，这个socket是用来接收client的请求的
+  # //I want to create a socket, this socket is used to receive the client's request
+
   serverSocker = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-#   //第一个是包，第二个是方法
-#   //使用api4地址
-#   //使用tcp协议
+#   //The first parameter is the address family, which is the address type
+#   //The second parameter is the socket type, which is the socket type
+
 
   # ~~~~ END CODE INSERT ~~~~
   print ('Created socket')
@@ -42,7 +44,7 @@ try:
   
 
   # ~~~~ END CODE INSERT ~~~~
-  # //绑定端口
+  # //Binding port
   serverSocker.bind((proxyHost, proxyPort))
   print ('Port is bound')
 except:
@@ -55,7 +57,8 @@ try:
   # ~~~~ END CODE INSERT ~~~~
 
   serverSocker.listen(5)
-  # //监听端口
+  # //listening
+  # //listen for incoming connections
   print ('Listening to socket')
 except:
   print ('Failed to listen')
@@ -64,12 +67,12 @@ except:
 # continuously accept connections
 while True:
   print ('Waiting for connection...')
-  clientSocket = None
+  ClientSocket = None
 
-  # Accept connection from client and store in the clientSocket
+  # Accept connection from client and store in the ClientSocket
   try:
     # ~~~~ INSERT CODE ~~~~
-    clientSocket, addr = serverSocker.accept()
+    ClientSocket, addr = serverSocker.accept()
     # ~~~~ END CODE INSERT ~~~~
     print ('Received a connection')
   except:
@@ -79,7 +82,7 @@ while True:
   # Get HTTP request from client
   # and store it in the variable: message_bytes
   # ~~~~ INSERT CODE ~~~~
-  message_bytes = clientSocket.recv(BUFFER_SIZE)
+  message_bytes = ClientSocket.recv(BUFFER_SIZE)
   # ~~~~ END CODE INSERT ~~~~
   message = message_bytes.decode('utf-8')
   print ('Received request:')
@@ -154,9 +157,9 @@ while True:
     # ProxyServer finds a cache hit
     # Send back response to client 
     # ~~~~ INSERT CODE ~~~~
-    clientSocket.sendall(''.join(cacheData).encode())
+    ClientSocket.sendall(''.join(cacheData).encode())
     # for data in cacheData:
-    #   clientSocket.send(data.encode())
+    #   ClientSocket.send(data.encode())
 
 
     # ~~~~ END CODE INSERT ~~~~
@@ -227,7 +230,7 @@ while True:
 
       # Send the response to the client
       # ~~~~ INSERT CODE ~~~~
-      clientSocket.sendall(originServerResponse)     
+      ClientSocket.sendall(originServerResponse)     
       # 转发给原始客户端
       # ~~~~ END CODE INSERT ~~~~
 
@@ -271,12 +274,12 @@ while True:
       print ('origin response received. Closing sockets')
       originServerSocket.close()
        
-      clientSocket.shutdown(socket.SHUT_WR)
+      ClientSocket.shutdown(socket.SHUT_WR)
       print ('client socket shutdown for writing')
     except OSError as err:
       print ('origin server request failed. ' + err.strerror)
 
   try:
-    clientSocket.close()
+    ClientSocket.close()
   except:
     print ('Failed to close client socket')
